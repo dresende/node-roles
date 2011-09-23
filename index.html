@@ -3,75 +3,132 @@
 <head>
   <meta charset='utf-8'>
 
-  <title>dresende/node-roles @ GitHub</title>
+  <title>NoveJS Role Management</title>
 
   <style type="text/css">
     body {
-      margin-top: 1.0em;
-      background-color: #dee5e8;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #000000;
+      margin-top: 1em;
+      background: #1b1b24;
+      font-family: Helvetica, Verdana, Arial, FreeSans, san-serif;
+      color: #8787db;
+      text-shadow: 0 1px 1px #000;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #211a17; margin-bottom: 3px; }
+    p { text-align: justify; }
+    h1 { font-size: 3.8em; color: #d4d4d4; margin-bottom: 3px; text-shadow: 1px 2px 3px #000; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #211a17; }
-    h3 { text-align: center; color: #211a17; }
-    a { color: #211a17; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
+    h2 { font-size: 1.5em; color: #d4d4d4; }
+    h3 { color: #d4d4d4; }
+    a { color: #d4d4d4; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; text-align: justify; }
+    pre { background: #14141b; color: #eee; padding: 15px; font-size: 80%; text-shadow: none; box-shadow: inset 0 0 4px #000; }
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
   </style>
 </head>
 
 <body>
-  <a href="http://github.com/dresende/node-roles"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  <a href="http://github.com/dresende/node-roles"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/4c7dc970b89fd04b81c8e221ba88ff99a06c6b61/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub"></a>
 
   <div id="container">
 
-    <div class="download">
-      <a href="http://github.com/dresende/node-roles/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/dresende/node-roles/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/dresende/node-roles">node-roles</a>
-      <span class="small">by <a href="http://github.com/dresende">dresende</a></span></h1>
+    <h1><a href="http://github.com/dresende/node-roles">Role Management</a></h1>
 
     <div class="description">
-      NodeJS Role Management
+      Manage application and profile roles in a simple manner. You can define your applications/modules and set a couple of roles (permissions). Then you can define profiles and add application roles to it. You can export the profiles and applications in JSON format to import later.
     </div>
 
-    <h2>Authors</h2>
-<p>Diogo Resende (dresende@thinkdigital.pt)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Diogo Resende (dresende@thinkdigital.pt)<br/>      </p>
+<h2>Install</h2>
 
+<pre>npm install roles</pre>
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/dresende/node-roles/zipball/master">zip</a> or
-      <a href="http://github.com/dresende/node-roles/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/dresende/node-roles</pre>
-    </p>
+<h2>API</h2>
 
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/dresende/node-roles">dresende/node-roles</a>
-    </div>
+<p>To use Roles, just include it in your role.</p>
 
-  </div>
+<pre>var roles = require("roles");</pre>
 
-  
+<h3>Creating an application</h3>
+
+<p>An application can be your entire application or an application module, it's your choice to split the roles into several applications (modules) or have all roles in one big application. To create an application you just have to define a name.</p>
+
+<pre>var myApp = roles.addApplication("myapp");</pre>
+
+<p>You can then add and remove roles from it.</p>
+
+<pre>myApp.addRoles("create")
+     .addRoles("remove")
+     .addRoles("view");
+// or add them all at once
+myApp.addRoles("create", "remove", "view", "list");
+// you can remove the same way
+myApp.removeRoles("list");</pre>
+
+<p>You could do this all in the application constructor:</p>
+
+<pre>var myApp = roles.addApplication("myapp", [ "create", "remove", "view" ]);</pre>
+
+<h3>Creating a profile</h3>
+
+<p>A profile is a way of defining a set of permissions that someone or something (that has that profile associated) can use to access somewhere or something. Confused?</p>
+
+<pre>var guestProfile = roles.addProfile("guest"),
+    managerProfile = roles.addProfile("manager");
+
+guestProfile.addRoles("myapp.view");
+managerProfile.addRoles("myapp.*"); // this is auto-updated if MyApp changes roles</pre>
+
+<p>Just like in the Application constructor, this could be defined with less calls:</p>
+
+<pre>var guestProfile = roles.addProfile("guest", [ "myapp.view" ]),
+    managerProfile = roles.addProfile("manager", "myapp.*");</pre>
+
+<h3>Testing roles</h3>
+
+<p>Now that you have your applications and profiles defined, it's simple to test roles. Imagine you have a user that you assign the profile called "guest". You can test for a specific permission like this:</p>
+
+<pre>// return true
+console.log("Guest has myapp.view role?", guestProfile.hasRoles("myapp.view"));</pre>
+
+<p>If you don't assign the profiles and applications to a variable, you can retrieve them using the roles.</p>
+
+<pre>// return true
+console.log("Guest has myapp.view role?", roles.getProfile("guest").hasRoles("myapp.view"));</pre>
+
+<p>Just like adding roles, you can also test if a profile has more than one role.</p>
+
+<pre>// return true
+console.log("Manager has myapp.view/create role?", managerProfile.hasRoles("myapp.view", "myapp.create"));</pre>
+
+<p>If any of the roles is not assigned to a profile, it woule return false. If you just want to check for at least one role, you can use the alternative .hasAnyRoles.</p>
+
+<pre>// return true
+console.log("Guest has myapp.view/create role?", guestProfile.hasAnyRoles("myapp.view", "myapp.create"));</pre>
+
+<h3>Export/import</h3>
+
+<p>To save your work, you can export all the applications and profiles.</p>
+
+<pre>jsonData = roles.export(); // save the returned JSON to a file or database</pre>
+
+<p>Following the same pattern, you can import later.</p>
+
+<pre>roles.import(jsonData); // everything will be reseted before importing</pre>
+
+<h2>License (MIT)</h2>
+
+<p>Copyright (C) 2011 by Diogo Resende
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+  </div>  
 </body>
 </html>
