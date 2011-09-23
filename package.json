@@ -1,7 +1,8 @@
 {
 	"name"			: "roles",
-	"version"		: "0.0.2",
+	"version"		: "0.0.3",
 	"description"	: "NodeJS Role Management",
+	"homepage"		: "http://dresende.github.com/node-roles",
 	"keywords"		: [
 		"acl",
 		"role",
