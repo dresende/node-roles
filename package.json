@@ -1,0 +1,28 @@
+{
+	"name"			: "roles",
+	"version"		: "0.0.1",
+	"description"	: "NodeJS Role Management",
+	"keywords"		: [
+		"acl",
+		"role",
+		"permission"
+	],
+	"author"	: "Diogo Resende <dresende@thinkdigital.pt>",
+	"contributors": [],
+	"engines"		: {
+		"node"	: ">= 0.4.0"
+	},
+	"repository"	: {
+		"type"	: "git",
+		"url"	: "http://github.com/dresende/node-roles.git"
+	},
+	"directories"	: {
+		"lib"		: "./lib",
+		"example"	: "./examples"
+	},
+	"main"			: "./lib/roles",
+	"licenses"		: [{
+		"type"	: "MIT",
+		"url"	: "http://github.com/dresende/node-roles/raw/master/LICENSE"
+	}]
+}
