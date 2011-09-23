@@ -32,6 +32,10 @@ You can then add and remove roles from it.
     // you can remove the same way
     myApp.removeRoles("list");
 
+You could do this all in the application constructor:
+
+    var myApp = roles.addApplication("myapp", [ "create", "remove", "view" ]);
+
 ### Creating a profile
 
 A profile is a way of defining a set of permissions that someone or something (that has that profile
@@ -42,6 +46,11 @@ associated) can use to access somewhere or something. Confused?
 
     guestProfile.addRoles("myapp.view");
     managerProfile.addRoles("myapp.*"); // this is auto-updated if MyApp changes roles
+
+Just like in the Application constructor, this could be defined with less calls:
+
+    var guestProfile = roles.addProfile("guest", [ "myapp.view" ]),
+        managerProfile = roles.addProfile("manager", "myapp.*");
 
 ### Testing roles
 
@@ -59,10 +68,10 @@ If you don't assign the profiles and applications to a variable, you can retriev
 Just like adding roles, you can also test if a profile has more than one role.
 
     // return true
-    console.log("Admin has myapp.view/create role?", adminProfile.hasRoles("myapp.view", "myapp.create"));
+    console.log("Manager has myapp.view/create role?", managerProfile.hasRoles("myapp.view", "myapp.create"));
 
 If any of the roles is not assigned to a profile, it woule return `false`. If you just want to check for
-at least one role, you can use the alternative `.hasAnyRoles`.
+at least one role, you can use the alternative .hasAnyRoles.
 
     // return true
     console.log("Guest has myapp.view/create role?", guestProfile.hasAnyRoles("myapp.view", "myapp.create"));
