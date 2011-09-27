@@ -10,7 +10,7 @@ export the profiles and applications in JSON format to import later.
 
 ## API
 
-To use Roles, just include it in your role.
+To use Roles, just include it in your code.
 
     var roles = require("roles");
 
