@@ -1,4 +1,4 @@
-## NodeJS Roles
+## NodeJS Roles ![ Travis CI ](https://secure.travis-ci.org/dresende/node-roles.png)
 
 Manage application and profile roles in a simple manner. You can define your applications/modules and set
 a couple of roles (permissions). Then you can define profiles and add application roles to it. You can
