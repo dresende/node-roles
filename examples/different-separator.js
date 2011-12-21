@@ -1,4 +1,4 @@
-var roles = require("roles");
+var roles = require("../lib/roles");
 
 roles.setSeparator("/");
 
