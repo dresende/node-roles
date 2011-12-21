@@ -1,6 +1,6 @@
 {
 	"name"			: "roles",
-	"version"		: "0.0.3",
+	"version"		: "0.0.4",
 	"description"	: "NodeJS Role Management",
 	"homepage"		: "http://dresende.github.com/node-roles",
 	"keywords"		: [
@@ -25,5 +25,8 @@
 	"licenses"		: [{
 		"type"	: "MIT",
 		"url"	: "http://github.com/dresende/node-roles/raw/master/LICENSE"
-	}]
+	}],
+	"scripts": {
+		"text": "vows --spec test/*"
+	}
 }
